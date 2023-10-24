@@ -46,4 +46,4 @@ runs:
           echo "env_name=${env_name}" >> $GITHUB_OUTPUT
 
     - name: Use variable setup in previous step
-      run: echo "I'm using variable ${{ outputs.env_name }}"
+      run: echo "I'm using variable ${{ outputs.env_name.value }}"
