@@ -1,5 +1,5 @@
-name: 'Build and push Docker image'
-description: 'Build and push a single Docker image to Github Container Registry, ghcr.io.'
+name: 'Determine deployment environment'
+description: 'determine deployment environment name based on branch'
 
 inputs:
   token:
