@@ -2,9 +2,6 @@ name: 'Determine deployment environment'
 description: 'determine deployment environment name based on branch'
 
 inputs:
-  token:
-    description: 'GitHub Token {{ secrets.GITHUB_TOKEN }} with the privilege set to write packages.'
-    required: false
   feature-branch-env-name:
     description: 'Name of the deployment environment for feature branches - default is `uat`'
     required: false
