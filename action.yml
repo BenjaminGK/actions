@@ -21,7 +21,7 @@ inputs:
     description: 'Name of the deployment environment for tags/releases - default is `production`'
     required: false
     default: 'production'
-    
+
 outputs:
   env_name:
     description: "Name of environment"
@@ -30,22 +30,20 @@ outputs:
 runs:
   using: "composite"
   steps:
+    - name: Set deployment environment
+      id: branch_check
+      shell: bash
+      run: |
+        if [[ ${{ contains(github.ref, 'feature/') }} ]]; then
+          env_name="${{ inputs.feature-branch-env-name }}"
+        elif [[ ${{ github.ref == 'refs/heads/develop' }} ]]; then
+          env_name="${{ inputs.develop-branch-env-name }}"
+        elif [[ ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' }} ]]; then
+          env_name="${{ inputs.master-branch-env-name }}"
+        elif [[ ${{ contains(github.ref, 'refs/tags') }} ]]; then
+          env_name="${{ inputs.tag-env-name }}"
+        fi
+          echo "env_name=${env_name}" >> $GITHUB_OUTPUT
 
-    steps:
-      - name: Set deployment environment
-        id: branch_check
-        shell: bash
-        run: |
-          if [[ ${{ contains(github.ref, 'feature/') }} ]]; then
-            env_name="${{ inputs.feature-branch-env-name }}"
-          elif [[ ${{ github.ref == 'refs/heads/develop' }} ]]; then
-            env_name="${{ inputs.develop-branch-env-name }}"
-          elif [[ ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' }} ]]; then
-            env_name="${{ inputs.master-branch-env-name }}"
-          elif [[ ${{ contains(github.ref, 'refs/tags') }} ]]; then
-            env_name="${{ inputs.tag-env-name }}"
-          fi
-           echo "env_name=${env_name}" >> $GITHUB_OUTPUT
-
-      - name: Use variable setup in previous step
-        run: echo "I'm using variable ${{ outputs.env_name }}"
+    - name: Use variable setup in previous step
+      run: echo "I'm using variable ${{ outputs.env_name }}"
