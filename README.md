@@ -4,6 +4,7 @@ A GitHub Action to detect which environment should be used for a given branch in
 
 ## Usage
 
+
 ```yaml
 - name: Get Environment
   id: get-environment

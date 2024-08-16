@@ -2,7 +2,6 @@ name: Update pull request
 
 on:
   pull_request:
-    branches: ['feature/*' ]
     types: [opened, reopened, synchronize]
 
 jobs:
@@ -15,6 +14,6 @@ jobs:
         uses: onrunning/jira-pr-action@v2
         with:
           jira-account: diakrit
-          ticket-regex: ^A1C-\\d+
+          ticket-regex: ^feature/POR-\d+
           clean-title-regex: ^\\s*A1\\s+c\\s+\\d+\\s*
           preview-link: https://preview-$(echo ${{ github.ref }} | sed 's|.*\/||').example.com"
